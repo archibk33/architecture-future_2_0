@@ -1,0 +1,61 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.4 Chrome/138.0.7204.97 Electron/37.2.1 Safari/537.36" version="28.0.4">
+  <diagram id="infra" name="Automation Diagram">
+    <mxGraphModel dx="3986" dy="1201" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="vpc" value="VPC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="-40" y="170" width="1460" height="750" as="geometry" />
+        </mxCell>
+        <mxCell id="subnet_pub" value="Публичная подсеть" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;dashed=1;" parent="vpc" vertex="1">
+          <mxGeometry x="20" y="22.058823529411768" width="660" height="330.8823529411765" as="geometry" />
+        </mxCell>
+        <mxCell id="ec2" value="ВМ EC2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;" parent="subnet_pub" vertex="1">
+          <mxGeometry x="40" y="66.17647058823532" width="160" height="66.17647058823532" as="geometry" />
+        </mxCell>
+        <mxCell id="ebs" value="Диск EBS" style="rounded=1;whiteSpace=wrap;html=1;" parent="subnet_pub" vertex="1">
+          <mxGeometry x="40" y="154.41176470588238" width="160" height="55.14705882352942" as="geometry" />
+        </mxCell>
+        <mxCell id="subnet_priv" value="Приватная подсеть" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#008a00;strokeColor=#005700;dashed=1;fontColor=#ffffff;" parent="vpc" vertex="1">
+          <mxGeometry x="780" y="244.99882352941177" width="660" height="330.8823529411765" as="geometry" />
+        </mxCell>
+        <mxCell id="rt_pub" value="Маршрут публичной подсети" style="rounded=1;whiteSpace=wrap;html=1;" parent="vpc" vertex="1">
+          <mxGeometry x="40" y="375.00000000000006" width="260" height="66.1764705882353" as="geometry" />
+        </mxCell>
+        <mxCell id="rt_priv" value="Маршрут приватной подсети" style="rounded=1;whiteSpace=wrap;html=1;" parent="vpc" vertex="1">
+          <mxGeometry x="800" y="600" width="260" height="66.1764705882353" as="geometry" />
+        </mxCell>
+        <mxCell id="nat" value="NAT" style="rounded=1;whiteSpace=wrap;html=1;" parent="vpc" vertex="1">
+          <mxGeometry x="360" y="375.00000000000006" width="120" height="66.1764705882353" as="geometry" />
+        </mxCell>
+        <mxCell id="eip" value="EIP" style="rounded=1;whiteSpace=wrap;html=1;" parent="vpc" vertex="1">
+          <mxGeometry x="360" y="463.2352941176471" width="120" height="44.117647058823536" as="geometry" />
+        </mxCell>
+        <mxCell id="sg" value="Группа безопасности" style="rounded=1;whiteSpace=wrap;html=1;" parent="vpc" vertex="1">
+          <mxGeometry x="40" y="463.2352941176471" width="260" height="44.117647058823536" as="geometry" />
+        </mxCell>
+        <mxCell id="igw" value="Интернет шлюз" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="430" y="80" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="S3 хранилище сырых данных" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-100" y="254.41" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" style="endArrow=block;strokeColor=#666666;" parent="1" source="igw" target="subnet_pub" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" style="endArrow=block;strokeColor=#666666;" parent="1" source="subnet_pub" target="nat" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" style="endArrow=block;strokeColor=#666666;" parent="1" source="nat" target="subnet_priv" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge4" style="endArrow=block;strokeColor=#666666;dashed=1;" parent="1" source="ec2" target="s3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge5" style="endArrow=block;strokeColor=#666666;" parent="1" source="ebs" target="ec2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

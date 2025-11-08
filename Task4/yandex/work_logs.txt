@@ -1,0 +1,561 @@
+PS D:\YandexDisk\Projects\SWA_Yandex\11_sprint\Task4\yandex> terraform plan
+data.yandex_compute_image.ubuntu: Reading...
+data.yandex_compute_image.ubuntu: Read complete after 0s [id=fd8aji3edmigm2tnjfg5]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # random_id.bucket_suffix will be created
+  + resource "random_id" "bucket_suffix" {
+      + b64_std     = (known after apply)
+      + b64_url     = (known after apply)
+      + byte_length = 4
+      + dec         = (known after apply)
+      + hex         = (known after apply)
+      + id          = (known after apply)
+    }
+
+  # yandex_compute_disk.data will be created
+  + resource "yandex_compute_disk" "data" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = (known after apply)
+      + id          = (known after apply)
+      + name        = "future20-data-disk"
+      + product_ids = (known after apply)
+      + size        = 20
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-a"
+
+      + disk_placement_policy (known after apply)
+
+      + hardware_generation (known after apply)
+    }
+
+  # yandex_compute_instance.vm will be created
+  + resource "yandex_compute_instance" "vm" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = (known after apply)
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "ssh-keys" = "ubuntu:REDACTED_SSH_PUBLIC_KEY"
+        }
+      + name                      = "future20-vm"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v3"
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params {
+              + block_size  = (known after apply)
+              + description = (known after apply)
+              + image_id    = "fd8aji3edmigm2tnjfg5"
+              + name        = (known after apply)
+              + size        = 15
+              + snapshot_id = (known after apply)
+              + type        = "network-hdd"
+            }
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy (known after apply)
+
+      + secondary_disk {
+          + auto_delete = false
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = "READ_WRITE"
+        }
+    }
+
+  # yandex_storage_bucket.raw will be created
+  + resource "yandex_storage_bucket" "raw" {
+      + access_key            = "REDACTED_ACCESS_KEY"
+      + acl                   = (known after apply)
+      + bucket                = (known after apply)
+      + bucket_domain_name    = (known after apply)
+      + default_storage_class = "STANDARD"
+      + folder_id             = (known after apply)
+      + force_destroy         = false
+      + id                    = (known after apply)
+      + policy                = (known after apply)
+      + secret_key            = (sensitive value)
+      + website_domain        = (known after apply)
+      + website_endpoint      = (known after apply)
+
+      + anonymous_access_flags (known after apply)
+
+      + grant (known after apply)
+
+      + versioning (known after apply)
+    }
+
+  # yandex_vpc_gateway.egress will be created
+  + resource "yandex_vpc_gateway" "egress" {
+      + created_at = (known after apply)
+      + folder_id  = (known after apply)
+      + id         = (known after apply)
+      + labels     = (known after apply)
+      + name       = "future20-egress"
+
+      + shared_egress_gateway {}
+    }
+
+  # yandex_vpc_network.this will be created
+  + resource "yandex_vpc_network" "this" {
+      + created_at                = (known after apply)
+      + default_security_group_id = (known after apply)
+      + folder_id                 = (known after apply)
+      + id                        = (known after apply)
+      + labels                    = (known after apply)
+      + name                      = "future20-net"
+      + subnet_ids                = (known after apply)
+    }
+
+  # yandex_vpc_route_table.private will be created
+  + resource "yandex_vpc_route_table" "private" {
+      + created_at = (known after apply)
+      + folder_id  = (known after apply)
+      + id         = (known after apply)
+      + labels     = (known after apply)
+      + network_id = (known after apply)
+
+      + static_route {
+          + destination_prefix = "0.0.0.0/0"
+          + gateway_id         = (known after apply)
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # yandex_vpc_security_group.vm_sg will be created
+  + resource "yandex_vpc_security_group" "vm_sg" {
+      + created_at = (known after apply)
+      + folder_id  = (known after apply)
+      + id         = (known after apply)
+      + labels     = (known after apply)
+      + name       = "future20-sg"
+      + network_id = (known after apply)
+      + status     = (known after apply)
+
+      + egress {
+          + description       = "Any"
+          + from_port         = 0
+          + id                = (known after apply)
+          + labels            = (known after apply)
+          + port              = -1
+          + protocol          = "ANY"
+          + to_port           = 65535
+          + v4_cidr_blocks    = [
+              + "0.0.0.0/0",
+            ]
+          + v6_cidr_blocks    = []
+            # (2 unchanged attributes hidden)
+        }
+
+      + ingress {
+          + description       = "HTTP"
+          + from_port         = -1
+          + id                = (known after apply)
+          + labels            = (known after apply)
+          + port              = 80
+          + protocol          = "TCP"
+          + to_port           = -1
+          + v4_cidr_blocks    = [
+              + "0.0.0.0/0",
+            ]
+          + v6_cidr_blocks    = []
+            # (2 unchanged attributes hidden)
+        }
+      + ingress {
+          + description       = "SSH"
+          + from_port         = -1
+          + id                = (known after apply)
+          + labels            = (known after apply)
+          + port              = 22
+          + protocol          = "TCP"
+          + to_port           = -1
+          + v4_cidr_blocks    = [
+              + "91.202.47.164/32",
+            ]
+          + v6_cidr_blocks    = []
+            # (2 unchanged attributes hidden)
+        }
+    }
+
+  # yandex_vpc_subnet.private will be created
+  + resource "yandex_vpc_subnet" "private" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "future20-subnet-private"
+      + network_id     = (known after apply)
+      + route_table_id = (known after apply)
+      + v4_cidr_blocks = [
+          + "10.30.2.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-a"
+    }
+
+  # yandex_vpc_subnet.public will be created
+  + resource "yandex_vpc_subnet" "public" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "future20-subnet-public"
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "10.30.1.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-a"
+    }
+
+Plan: 10 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + bucket_name  = (known after apply)
+  + network_id   = (known after apply)
+  + vm_public_ip = (known after apply)
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+PS D:\YandexDisk\Projects\SWA_Yandex\11_sprint\Task4\yandex> terraform apply -auto-approve
+data.yandex_compute_image.ubuntu: Reading...
+data.yandex_compute_image.ubuntu: Read complete after 0s [id=fd8aji3edmigm2tnjfg5]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # random_id.bucket_suffix will be created
+  + resource "random_id" "bucket_suffix" {
+      + b64_std     = (known after apply)
+      + b64_url     = (known after apply)
+      + byte_length = 4
+      + dec         = (known after apply)
+      + hex         = (known after apply)
+      + id          = (known after apply)
+    }
+
+  # yandex_compute_disk.data will be created
+  + resource "yandex_compute_disk" "data" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = (known after apply)
+      + id          = (known after apply)
+      + name        = "future20-data-disk"
+      + product_ids = (known after apply)
+      + size        = 20
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-a"
+
+      + disk_placement_policy (known after apply)
+
+      + hardware_generation (known after apply)
+    }
+
+  # yandex_compute_instance.vm will be created
+  + resource "yandex_compute_instance" "vm" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = (known after apply)
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "ssh-keys" = "ubuntu:REDACTED_SSH_PUBLIC_KEY"
+        }
+      + name                      = "future20-vm"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v3"
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params {
+              + block_size  = (known after apply)
+              + description = (known after apply)
+              + image_id    = "fd8aji3edmigm2tnjfg5"
+              + name        = (known after apply)
+              + size        = 15
+              + snapshot_id = (known after apply)
+              + type        = "network-hdd"
+            }
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy (known after apply)
+
+      + secondary_disk {
+          + auto_delete = false
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = "READ_WRITE"
+        }
+    }
+
+  # yandex_storage_bucket.raw will be created
+  + resource "yandex_storage_bucket" "raw" {
+      + access_key            = "REDACTED_ACCESS_KEY"
+      + acl                   = (known after apply)
+      + bucket                = (known after apply)
+      + bucket_domain_name    = (known after apply)
+      + default_storage_class = "STANDARD"
+      + folder_id             = (known after apply)
+      + force_destroy         = false
+      + id                    = (known after apply)
+      + policy                = (known after apply)
+      + secret_key            = (sensitive value)
+      + website_domain        = (known after apply)
+      + website_endpoint      = (known after apply)
+
+      + anonymous_access_flags (known after apply)
+
+      + grant (known after apply)
+
+      + versioning (known after apply)
+    }
+
+  # yandex_vpc_gateway.egress will be created
+  + resource "yandex_vpc_gateway" "egress" {
+      + created_at = (known after apply)
+      + folder_id  = (known after apply)
+      + id         = (known after apply)
+      + labels     = (known after apply)
+      + name       = "future20-egress"
+
+      + shared_egress_gateway {}
+    }
+
+  # yandex_vpc_network.this will be created
+  + resource "yandex_vpc_network" "this" {
+      + created_at                = (known after apply)
+      + default_security_group_id = (known after apply)
+      + folder_id                 = (known after apply)
+      + id                        = (known after apply)
+      + labels                    = (known after apply)
+      + name                      = "future20-net"
+      + subnet_ids                = (known after apply)
+    }
+
+  # yandex_vpc_route_table.private will be created
+  + resource "yandex_vpc_route_table" "private" {
+      + created_at = (known after apply)
+      + folder_id  = (known after apply)
+      + id         = (known after apply)
+      + labels     = (known after apply)
+      + network_id = (known after apply)
+
+      + static_route {
+          + destination_prefix = "0.0.0.0/0"
+          + gateway_id         = (known after apply)
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # yandex_vpc_security_group.vm_sg will be created
+  + resource "yandex_vpc_security_group" "vm_sg" {
+      + created_at = (known after apply)
+      + folder_id  = (known after apply)
+      + id         = (known after apply)
+      + labels     = (known after apply)
+      + name       = "future20-sg"
+      + network_id = (known after apply)
+      + status     = (known after apply)
+
+      + egress {
+          + description       = "Any"
+          + from_port         = 0
+          + id                = (known after apply)
+          + labels            = (known after apply)
+          + port              = -1
+          + protocol          = "ANY"
+          + to_port           = 65535
+          + v4_cidr_blocks    = [
+              + "0.0.0.0/0",
+            ]
+          + v6_cidr_blocks    = []
+            # (2 unchanged attributes hidden)
+        }
+
+      + ingress {
+          + description       = "HTTP"
+          + from_port         = -1
+          + id                = (known after apply)
+          + labels            = (known after apply)
+          + port              = 80
+          + protocol          = "TCP"
+          + to_port           = -1
+          + v4_cidr_blocks    = [
+              + "0.0.0.0/0",
+            ]
+          + v6_cidr_blocks    = []
+            # (2 unchanged attributes hidden)
+        }
+      + ingress {
+          + description       = "SSH"
+          + from_port         = -1
+          + id                = (known after apply)
+          + labels            = (known after apply)
+          + port              = 22
+          + protocol          = "TCP"
+          + to_port           = -1
+          + v4_cidr_blocks    = [
+              + "91.202.47.164/32",
+            ]
+          + v6_cidr_blocks    = []
+            # (2 unchanged attributes hidden)
+        }
+    }
+
+  # yandex_vpc_subnet.private will be created
+  + resource "yandex_vpc_subnet" "private" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "future20-subnet-private"
+      + network_id     = (known after apply)
+      + route_table_id = (known after apply)
+      + v4_cidr_blocks = [
+          + "10.30.2.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-a"
+    }
+
+  # yandex_vpc_subnet.public will be created
+  + resource "yandex_vpc_subnet" "public" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "future20-subnet-public"
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "10.30.1.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-a"
+    }
+
+Plan: 10 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + bucket_name  = (known after apply)
+  + network_id   = (known after apply)
+  + vm_public_ip = (known after apply)
+random_id.bucket_suffix: Creating...
+random_id.bucket_suffix: Creation complete after 0s [id=tqAJcA]
+yandex_vpc_gateway.egress: Creating...
+yandex_vpc_network.this: Creating...
+yandex_storage_bucket.raw: Creating...
+yandex_compute_disk.data: Creating...
+yandex_vpc_gateway.egress: Creation complete after 1s [id=enpkq1edsk76pi9afphh]
+yandex_vpc_network.this: Creation complete after 4s [id=enphp2o5ku6d3ai1keua]
+yandex_vpc_subnet.public: Creating...
+yandex_vpc_route_table.private: Creating...
+yandex_vpc_security_group.vm_sg: Creating...
+yandex_vpc_subnet.public: Creation complete after 1s [id=e9bo9prhasomadaq7e7s]
+yandex_vpc_route_table.private: Creation complete after 2s [id=enp10eolbocn21n2la4u]
+yandex_vpc_subnet.private: Creating...
+yandex_vpc_security_group.vm_sg: Creation complete after 2s [id=enpgkt9t9r1bijs05lbc]
+yandex_vpc_subnet.private: Creation complete after 0s [id=e9bmk76q0opvlqdiqsum]
+yandex_compute_disk.data: Still creating... [00m10s elapsed]
+yandex_storage_bucket.raw: Still creating... [00m10s elapsed]
+yandex_compute_disk.data: Creation complete after 10s [id=fhmuk6smp31ls148ufnn]
+yandex_compute_instance.vm: Creating...
+yandex_storage_bucket.raw: Creation complete after 14s [id=future20-raw-b6a00970]
+yandex_compute_instance.vm: Still creating... [00m10s elapsed]
+yandex_compute_instance.vm: Still creating... [00m20s elapsed]
+yandex_compute_instance.vm: Still creating... [00m30s elapsed]
+yandex_compute_instance.vm: Still creating... [00m40s elapsed]
+yandex_compute_instance.vm: Creation complete after 47s [id=fhmjd756ofion5rcspaa]
+
+Apply complete! Resources: 10 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+bucket_name = "future20-raw-b6a00970"
+network_id = "enphp2o5ku6d3ai1keua"
+vm_public_ip = "158.160.103.158"
+PS D:\YandexDisk\Projects\SWA_Yandex\11_sprint\Task4\yandex> terraform output
+bucket_name = "future20-raw-b6a00970"
+network_id = "enphp2o5ku6d3ai1keua"
+vm_public_ip = "158.160.103.158"
+PS D:\YandexDisk\Projects\SWA_Yandex\11_sprint\Task4\yandex>
