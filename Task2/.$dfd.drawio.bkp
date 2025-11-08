@@ -1,0 +1,101 @@
+<mxfile host="app.diagrams.net" modified="2025-11-08T00:00:00.000Z" agent="Mozilla/5.0" version="22.0.3" editor="www.diagrams.net">
+  <diagram id="dfd" name="DFD">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <!-- Внешние системы -->
+        <mxCell id="fintech" value="Финтех сервисы" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="ai" value="ИИ сервисы" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="60" y="200" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="clinics" value="Клинические приложения" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="200" height="50" as="geometry"/>
+        </mxCell>
+        <!-- Интеграция -->
+        <mxCell id="integration" value="Интеграционный слой" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="320" y="120" width="180" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="streams" value="Платформа потоков" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="120" width="180" height="50" as="geometry"/>
+        </mxCell>
+        <!-- Платформа данных -->
+        <mxCell id="orchestrator" value="Оркестрация ETL" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="780" y="120" width="180" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="lake" value="Хранилище сырых данных" style="shape=partialRectangle;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#000;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="60" width="220" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dwh" value="Хранилище данных" style="shape=partialRectangle;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#000;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="180" width="220" height="60" as="geometry"/>
+        </mxCell>
+        <!-- Доступ и каталог -->
+        <mxCell id="idp" value="Идентификация" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="780" y="260" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="access" value="Управление доступом" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="960" y="260" width="180" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="catalog" value="Каталог данных" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="260" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <!-- Витрина и отчеты -->
+        <mxCell id="portal" value="Портал витрина данных" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="120" width="200" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="reporting" value="Сервис отчетности" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="200" width="200" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="bi" value="BI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="40" width="120" height="50" as="geometry"/>
+        </mxCell>
+        <!-- Ребра -->
+        <mxCell id="edge1" edge="1" parent="1" source="clinics" target="integration" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="1" source="fintech" target="integration" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="1" source="ai" target="integration" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge4" edge="1" parent="1" source="integration" target="streams" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge5" edge="1" parent="1" source="streams" target="orchestrator" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge6" edge="1" parent="1" source="orchestrator" target="lake" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge7" edge="1" parent="1" source="orchestrator" target="dwh" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge8" edge="1" parent="1" source="reporting" target="dwh" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge9" edge="1" parent="1" source="bi" target="dwh" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge10" edge="1" parent="1" source="portal" target="reporting" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge11" edge="1" parent="1" source="portal" target="catalog" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge12" edge="1" parent="1" source="access" target="idp" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge13" edge="1" parent="1" source="catalog" target="dwh" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge14" edge="1" parent="1" source="portal" target="access" style="endArrow=block;strokeColor=#666666;">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+
