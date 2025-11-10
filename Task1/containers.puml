@@ -3,12 +3,12 @@
 
 LAYOUT_LEFT_RIGHT()
 
-Person(employee, "сорудник", "получает отчеты и создает свои")
+Person(employee, "сотрудник", "получает отчеты и создает свои")
 
 System_Boundary(sys, "Платформа данных ''Будущее 2.0''") {
 	Container(portal, "портал витрина данных", "Web", "самообслуживание и ролевой доступ")
 	Container(gateway, "шлюз API", "API Gateway", "Единая точка входа")
-	Container(reporting, "срвис отчетности", "Service", "Генерация отчетов")
+	Container(reporting, "сервис отчетности", "Service", "Генерация отчетов")
 	Container(catalog, "каталог данных", "Service", "Доступ и метаданные")
 	Container(access, "Управление доступом", "Service", "Роли и аудит")
 	ContainerDb(dwh, "Хранилище данных", "сloud DWH", "Витрины и агрегаты")
@@ -17,12 +17,14 @@ System_Boundary(sys, "Платформа данных ''Будущее 2.0''") {
 	ContainerQueue(streams, "Платформа потоков", "Kafka", "Сообщения")
 	Container(bi, "BI", "BI", "Визуализация и модели")
 	Container(idp, "идентификация", "IdP", "провайдер учетных записей")
-	Container(integration, "Интеграционный слой", "Шина", "Интеграции")
+	Container(connect, "Коннекторы и адаптеры", "Kafka Connect/iPaaS", "Подключение источников и публикация событий")
+	Container(streamproc, "Потоковые обработки", "Flink/Kafka Streams", "ФЛК, DQ и трансформации в потоке")
+	Container(registry, "Реестр схем", "Schema Registry", "Контракты и валидация сообщений")
 }
 
 System_Ext(fintech, "финтех сервисы", "Внешняя система")
 System_Ext(ai, "ai сервисы", "Внешняя система")
-System_Ext(clinics, "rлинические приложения", "Внешняя система")
+System_Ext(clinics, "клинические приложения", "Внешняя система")
 
 Rel(employee, portal, "работает с")
 Rel(portal, gateway, "запросы данных")
@@ -36,10 +38,13 @@ Rel(bi, dwh, "читает данные")
 Rel(orchestrator, dwh, "пишет данные")
 Rel(orchestrator, datalake, "пишет сырые наборы")
 Rel(streams, orchestrator, "события")
-Rel(integration, streams, "публикует")
-Rel(fintech, integration, "интеграция")
-Rel(ai, integration, "интеграция")
-Rel(clinics, integration, "интеграция")
+Rel(connect, streams, "публикует")
+Rel(streamproc, streams, "читает/пишет")
+Rel(connect, registry, "валидация контрактов")
+Rel(streamproc, registry, "контракты")
+Rel(fintech, connect, "интеграция")
+Rel(ai, connect, "интеграция")
+Rel(clinics, connect, "интеграция")
 Rel(catalog, dwh, "метаданные")
 Rel(access, idp, "синхронизация")
 
